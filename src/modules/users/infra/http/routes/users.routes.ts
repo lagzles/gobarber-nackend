@@ -4,7 +4,7 @@ import uploadConfig from '@config/upload';
 
 import CreateUserService from '@modules/users/services/CreateUserService';
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
-import ensureAuthentication from '@shared/infra/http/middlewares/ensureAuthenticated';
+import ensureAuthentication from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const usersRouter = Router();
 // middleware de upload de avatar para usuarios
