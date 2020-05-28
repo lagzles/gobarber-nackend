@@ -1,25 +1,39 @@
 import { startOfHour } from 'date-fns';
-import { getCustomRepository } from 'typeorm';
+// import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
-import AppointmentsRepository from '@modules/appointments//repositories/AppointmentsRepository';
+import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
+// import AppointmentsRepository from '@modules/appointments/infra/repositories/AppointmentsRepository';
 
-interface RequestDTO {
+interface IRequestDTO {
   provider_id: string;
   date: Date;
 }
 
 class CreateAppointmentService {
+  // private appointmentsRepository: IAppointmentsRepository;
+
+  // constructor(
+  //   appointmentsRepository: IAppointmentsRepository
+  // ) {
+  //   this.appointmentsRepository = appointmentsRepository
+  // }
+
+  constructor(
+    private appointmentsRepository: IAppointmentsRepository
+  ) {
+  }
+
   public async execute({
     provider_id,
     date,
-  }: RequestDTO): Promise<Appointment> {
-    const appointmentsRepository = getCustomRepository(AppointmentsRepository);
+  }: IRequestDTO): Promise<Appointment> {
+    // const appointmentsRepository = getCustomRepository(AppointmentsRepository);
 
     const appointmentDate = startOfHour(date);
 
-    const findAppointmentInDate = await appointmentsRepository.findByDate(
+    const findAppointmentInDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
     );
 
@@ -27,7 +41,7 @@ class CreateAppointmentService {
       throw new AppError('Agendamento não é valido. horario ocupado');
     }
 
-    const appointment = appointmentsRepository.create({
+    const appointment = this.appointmentsRepository.create({
       provider_id,
       date: appointmentDate,
     });
