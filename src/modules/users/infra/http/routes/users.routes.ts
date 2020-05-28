@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import multer from 'multer';
-import uploadConfig from '../config/upload';
+import uploadConfig from '@config/upload';
 
-import CreateUserService from '../services/CreateUserService';
-import UpdateUserAvatarService from '../services/UpdateUserAvatarService';
-import ensureAuthentication from '../middlewares/ensureAuthenticated';
+import CreateUserService from '@modules/users/services/CreateUserService';
+import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
+import ensureAuthentication from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const usersRouter = Router();
 // middleware de upload de avatar para usuarios
