@@ -1,18 +1,18 @@
 import { startOfHour } from 'date-fns';
-// import { getCustomRepository } from 'typeorm';
+import { injectable, inject } from 'tsyringe';
+
 import AppError from '@shared/errors/AppError';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
-// import AppointmentsRepository from '@modules/appointments/infra/repositories/AppointmentsRepository';
 
 interface IRequestDTO {
   provider_id: string;
   date: Date;
 }
 
+@injectable()
 class CreateAppointmentService {
-  // private appointmentsRepository: IAppointmentsRepository;
 
   // constructor(
   //   appointmentsRepository: IAppointmentsRepository
@@ -21,6 +21,8 @@ class CreateAppointmentService {
   // }
 
   constructor(
+    @inject('AppointmentsRepository')
+
     private appointmentsRepository: IAppointmentsRepository
   ) {
   }
