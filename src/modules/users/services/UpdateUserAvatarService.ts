@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import AppError from '@shared/errors/AppError';
-import IUsersRepositories from '../repositories/IUsersRepositories';
+import IUsersRepository from '../repositories/IUsersRepository';
 
 import uploadConfig from '@config/upload';
 import User from '@modules/users/infra/typeorm/entities/User';
@@ -16,7 +16,7 @@ interface Request {
 class UpdateUserAvatarService {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepositories) { }
+    private usersRepository: IUsersRepository) { }
 
   public async execute({ user_id, avatarFilename }: Request): Promise<User> {
 
