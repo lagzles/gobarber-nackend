@@ -1,6 +1,7 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import AuthenticateUserService from './AuthenticateUserService';
 import CreateUserService from './CreateUserService';
 
@@ -8,10 +9,11 @@ import CreateUserService from './CreateUserService';
 describe('CreateUser', () => {
   it('should be able authenticate a user', async () => {
     const fakeUsersRepository = new FakeUsersRepository();
-    const authenticateUserService = new AuthenticateUserService(fakeUsersRepository);
-    const createUserService = new CreateUserService(fakeUsersRepository);
+    const fakeHashProvider = new FakeHashProvider();
+    const authenticateUserService = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider);
+    const createUserService = new CreateUserService(fakeUsersRepository, fakeHashProvider);
 
-    await createUserService.execute({
+    const user = await createUserService.execute({
       name: 'joão ninguem',
       email: 'joao@ninguem.com',
       password: '123456',
@@ -23,6 +25,7 @@ describe('CreateUser', () => {
     });
 
     expect(response).toHaveProperty('token');
+    expect(response.user).toEqual(user);
   });
 
 
