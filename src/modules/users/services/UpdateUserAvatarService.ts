@@ -16,7 +16,7 @@ class UpdateUserAvatarService {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    @inject('SotrageProvider')
+    @inject('StorageProvider')
     private storageProvider: IStorageProvider,
   ) { }
 
@@ -32,12 +32,6 @@ class UpdateUserAvatarService {
     if (user.avatar) {
       // Deletar avatar anterior
       await this.storageProvider.deleteFile(user.avatar);
-      // const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      // const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-
-      // if (userAvatarFileExists) {
-      //   await fs.promises.unlink(userAvatarFilePath);
-      // }
     }
     // pega da pasta tmp e salva em uploads - no caso de storage local
     const newAvatarFilename = await this.storageProvider.saveFile(avatarFilename);
