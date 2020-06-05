@@ -27,4 +27,4 @@ class DiskStorageProvider implements IStorageProvider {
 
 }
 
-export default DiskStorageProvider
+export default DiskStorageProvider;

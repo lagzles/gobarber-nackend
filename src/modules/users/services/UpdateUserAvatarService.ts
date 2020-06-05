@@ -1,14 +1,16 @@
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '../repositories/IUsersRepository';
-
 import User from '@modules/users/infra/typeorm/entities/User';
+import 'reflect-metadata';
+
 import { injectable, inject } from 'tsyringe';
+
+import IUsersRepository from '../repositories/IUsersRepository';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 
 interface Request {
   user_id: string;
   avatarFilename: string;
-}
+};
 
 @injectable()
 class UpdateUserAvatarService {
@@ -18,7 +20,7 @@ class UpdateUserAvatarService {
 
     @inject('StorageProvider')
     private storageProvider: IStorageProvider,
-  ) { }
+  ) { };
 
   public async execute({ user_id, avatarFilename }: Request): Promise<User> {
 
