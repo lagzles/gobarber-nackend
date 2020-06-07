@@ -23,8 +23,25 @@ describe('SendForgotPasswordEmail ', () => {
 
   })
 
-  it('should be able to send email to recover user lost password ', async () => {
+  it('should be able to reset password ', async () => {
 
+    const user = await fakeUsersRepository.create({
+      name: 'jose',
+      email: 'j@j.com',
+      password: '123456'
+    })
+
+    const { token } = await fakeUserTokensRepository.generate(user.id);
+
+    await resetPasswordService.execute({
+      token,
+      password: '123123',
+
+    })
+
+    const updatedUser = await fakeUsersRepository.findById(user.id)
+
+    expect(updatedUser?.password).toBe('123123');
 
   });
 });
