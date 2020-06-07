@@ -1,5 +1,5 @@
 // import User from '@modules/users/infra/typeorm/entities/User';
-// import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 
@@ -21,6 +21,12 @@ class SendForgotPasswordEmailService {
   ) { }
 
   public async execute(data: Request): Promise<void> {
+    const checkIfUserExists = await this.usersRepository.findByEmail(data.email);
+
+    if (!checkIfUserExists) {
+      throw new AppError('Email não valido');
+    }
+
     this.mailProvider.sendMail(data.email, 'Pedido de recuperação de senha recebido!')
 
   }

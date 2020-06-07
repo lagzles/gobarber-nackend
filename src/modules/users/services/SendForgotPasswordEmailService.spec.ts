@@ -30,4 +30,20 @@ describe('SendForgotPasswordEmail ', () => {
 
   });
 
+  it('should not be able to recover a password from a non valid email', async () => {
+    const fakeUsersRepository = new FakeUsersRepository();
+    const fakeMailProvider = new FakeMailProvider();
+
+    const sendForgotPasswordEmailService = new SendForgotPasswordEmailService(
+      fakeUsersRepository,
+      fakeMailProvider
+    );
+
+    await expect(
+      sendForgotPasswordEmailService.execute({
+        email: 'joao@ninguem.com',
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
 });
