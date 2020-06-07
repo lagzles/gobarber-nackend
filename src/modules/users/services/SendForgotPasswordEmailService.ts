@@ -1,6 +1,7 @@
 // import User from '@modules/users/infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '../repositories/IUsersRepository';
+import IUserTokensRepository from '../repositories/IUserTokensRepository';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 
 import { injectable, inject } from 'tsyringe';
@@ -18,6 +19,9 @@ class SendForgotPasswordEmailService {
     @inject('MailProvider')
     private mailProvider: IMailProvider,
 
+    @inject('UserTokensRepository')
+    private userTokensRepository: IUserTokensRepository
+
   ) { }
 
   public async execute(data: Request): Promise<void> {
@@ -26,6 +30,8 @@ class SendForgotPasswordEmailService {
     if (!checkIfUserExists) {
       throw new AppError('Email não valido');
     }
+
+    await this.userTokensRepository.generate(checkIfUserExists.id);
 
     this.mailProvider.sendMail(data.email, 'Pedido de recuperação de senha recebido!')
 
