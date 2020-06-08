@@ -1,11 +1,12 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export default class CreateAppointments1587310211533
-  implements MigrationInterface {
+export default class CreateUserTokensMigration1591612201259 implements MigrationInterface {
+
   public async up(queryRunner: QueryRunner): Promise<void> {
+
     await queryRunner.createTable(
       new Table({
-        name: 'appointments',
+        name: 'user_tokens',
         columns: [
           {
             name: 'id',
@@ -16,13 +17,14 @@ export default class CreateAppointments1587310211533
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'provider',
-            type: 'varchar',
-            isNullable: false,
+            name: 'token',
+            type: 'uuid',
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
           },
           {
-            name: 'date',
-            type: 'timestamp with time zone',
+            name: 'user_id',
+            type: 'uuid',
             isNullable: false,
           },
           {
@@ -36,11 +38,26 @@ export default class CreateAppointments1587310211533
             default: 'now()',
           },
         ],
+
+        foreignKeys: [
+          {
+            name: 'TokenUser',
+            columnNames: ['user_id'],
+            referencedColumnNames: ['id'],
+            referencedTableName: 'users',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          }
+        ]
+
       }),
     );
+
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('appointments');
+
+    await queryRunner.dropTable('user_tokens')
   }
+
 }
