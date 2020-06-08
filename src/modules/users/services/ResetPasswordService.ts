@@ -8,7 +8,7 @@ import { injectable, inject } from 'tsyringe';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
 import AppError from '@shared/errors/AppError';
-// import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
   token: string;
@@ -26,8 +26,8 @@ class ResetPasswordService {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    // @inject('HashProvider')
-    // private hashProvider: IHashProvider,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
 
     @inject('UserTokensRepository')
     private userTokensRepository: IUserTokensRepository,
@@ -47,7 +47,7 @@ class ResetPasswordService {
       throw new AppError('User is not valid')
     }
 
-    user.password = password;
+    user.password = await this.hashProvider.generateHash(password);
 
     await this.usersRepository.save(user);
 
