@@ -1,13 +1,11 @@
 import { sign } from 'jsonwebtoken';
-// import User from '@modules/users/infra/typeorm/entities/User';//'../models/User';
-// import authConfig from '@config/auth';
+import AppError from '@shared/errors/AppError';
+import { isAfter, addHours } from 'date-fns';
 
 import { injectable, inject } from 'tsyringe';
 
-// import AppError from '@shared/errors/AppError';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
-import AppError from '@shared/errors/AppError';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
@@ -45,6 +43,13 @@ class ResetPasswordService {
 
     if (!user) {
       throw new AppError('User is not valid')
+    }
+
+    const tokenCreatedAt = userToken.created_at;
+    const comparedDate = addHours(tokenCreatedAt, 2)
+
+    if (isAfter(Date.now(), comparedDate)) {
+      throw new AppError('Token expired');
     }
 
     user.password = await this.hashProvider.generateHash(password);
