@@ -27,15 +27,13 @@ class SendForgotPasswordEmailService {
   public async execute(data: Request): Promise<void> {
     const checkIfUserExists = await this.usersRepository.findByEmail(data.email);
 
-    console.log('checkuser', checkIfUserExists)
-
     if (!checkIfUserExists) {
       throw new AppError('Email não valido');
     }
 
     await this.userTokensRepository.generate(checkIfUserExists.id);
 
-    this.mailProvider.sendMail(data.email, 'Pedido de recuperação de senha recebido!')
+    await this.mailProvider.sendMail(data.email, 'Pedido de recuperação de senha recebido!')
 
   }
 }

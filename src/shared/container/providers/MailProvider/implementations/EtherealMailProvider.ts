@@ -1,25 +1,30 @@
 import nodemailer, { Transporter } from 'nodemailer';
 import IMailProvider from '../models/IMailProvider';
-import AppError from '@shared/errors/AppError';
+// import AppError from '@shared/errors/AppError';
 
 export default class EtherealMailProvider implements IMailProvider {
   private client: Transporter;
 
   constructor() {
-    nodemailer.createTestAccount((err, account) => {
-
-      if (err) {
-        throw new AppError('Failed to create a testing account. ' + err.message);
-      }
+    nodemailer.createTestAccount().then(account => {
 
       const transporter = nodemailer.createTransport({
-        host: account.smtp.host, // PQ ESSE ERRO?!?!
-        port: account.smtp.port,
+        // host: account.smtp.host, // PQ ESSE ERRO?!?!
+        // port: account.smtp.port,
         secure: account.smtp.secure,
-        aut: {
-          user: account.user,
-          pass: account.pass
-        },
+        // aut: {
+        //   user: account.user,
+        //   pass: account.pass,
+        // },
+        host: 'smtp.ethereal.email',
+        port: 587,
+        auth: {
+          user: 'herta.harvey@ethereal.email',
+          pass: 'JGURKk7KzunuzkQCE3'
+        }
+
+
+
       });
 
       this.client = transporter;
