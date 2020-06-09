@@ -31,9 +31,14 @@ class SendForgotPasswordEmailService {
       throw new AppError('Email não valido');
     }
 
-    await this.userTokensRepository.generate(checkIfUserExists.id);
+    const { token } = await this.userTokensRepository.generate(checkIfUserExists.id);
 
-    await this.mailProvider.sendMail(data.email, 'Pedido de recuperação de senha recebido!')
+
+
+    await this.mailProvider.sendMail(
+      data.email,
+      `Pedido de recuperação de senha recebido: ${token}`
+    )
 
   }
 }
