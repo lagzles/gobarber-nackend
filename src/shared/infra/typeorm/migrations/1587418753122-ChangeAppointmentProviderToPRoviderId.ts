@@ -42,6 +42,7 @@ export default class ChangeAppointmentProviderToPRoviderId1587418753122
       new TableColumn({
         name: 'provider',
         type: 'varchar',
+        default: '123'
       }),
     );
   }

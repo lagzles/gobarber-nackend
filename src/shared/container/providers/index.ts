@@ -4,7 +4,7 @@ import IStorageProvider from './StorageProvider/models/IStorageProvider';
 import DiskStorageProvider from './StorageProvider/implementations/DiskStorageProvider';
 
 import IMailProvider from './MailProvider/models/IMailProvider';
-import MailSenderProvider from './MailProvider/implementations/MailSenderProvider';
+import EtherealMailProvider from './MailProvider/implementations/EtherealMailProvider';
 
 container.registerSingleton<IStorageProvider>(
   'StorageProvider',
@@ -14,7 +14,7 @@ container.registerSingleton<IStorageProvider>(
 
 container.registerSingleton<IMailProvider>(
   'MailProvider',
-  MailSenderProvider
+  EtherealMailProvider
 );
 
 
