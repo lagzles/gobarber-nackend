@@ -6,13 +6,20 @@ import UpdateUserAvatarService from './UpdateUserAvatarService';
 
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 
+let fakeStorageProvider: FakeStorageProvider;
+let fakeUsersRepository: FakeUsersRepository;
+let updateUserAvatarService: UpdateUserAvatarService;
+
+
 describe('Update Avatar', () => {
+  beforeEach(() => {
+    fakeStorageProvider = new FakeStorageProvider();
+    fakeUsersRepository = new FakeUsersRepository();
+    updateUserAvatarService = new UpdateUserAvatarService(fakeUsersRepository, fakeStorageProvider);
+
+  });
+
   it('should be able update user avagtar', async () => {
-    const fakeStorageProvider = new FakeStorageProvider();
-    const fakeUsersRepository = new FakeUsersRepository();
-
-    const updateUserAvatarService = new UpdateUserAvatarService(fakeUsersRepository, fakeStorageProvider);
-
     const user = await fakeUsersRepository.create({
       name: 'joão ninguem',
       email: 'joao@ninguem.com',
@@ -29,11 +36,6 @@ describe('Update Avatar', () => {
 
 
   it('should not be able update non-existing user avatar', async () => {
-    const fakeStorageProvider = new FakeStorageProvider();
-    const fakeUsersRepository = new FakeUsersRepository();
-
-    const updateUserAvatarService = new UpdateUserAvatarService(fakeUsersRepository, fakeStorageProvider);
-
     await expect(
       updateUserAvatarService.execute({
         user_id: 'nao-existente',
