@@ -70,4 +70,88 @@ describe('Update User Profile', () => {
 
   });
 
+
+  it('should be able to update user name only', async () => {
+
+    const user = await fakeUsersRepository.create({
+      name: 'jose',
+      email: 'j@j.com',
+      password: '123456'
+    })
+
+    const updatedUser = await updateProfileService.execute({
+      user_id: user.id,
+      name: 'doisze',
+      email: 'j@j.com',
+    })
+
+    expect(updatedUser?.name).toBe('doisze');
+    expect(updatedUser?.email).toBe('j@j.com');
+  });
+
+  it('should be able to update user password', async () => {
+
+    const user = await fakeUsersRepository.create({
+      name: 'jose',
+      email: 'j@j.com',
+      password: '123456'
+    })
+
+    // const generateHash = jest.spyOn(fakeHashProvider, 'generateHash')
+
+    const updatedUser = await updateProfileService.execute({
+      user_id: user.id,
+      name: 'doisze',
+      email: 'doisze@dois.com',
+      password: '123123',
+      old_password: '123456',
+    });
+
+    expect(updatedUser?.password).toBe('123123');
+  });
+
+
+  it('should not be able to update user password without old_passowrd', async () => {
+
+    const user = await fakeUsersRepository.create({
+      name: 'jose',
+      email: 'j@j.com',
+      password: '123456'
+    })
+
+    // const generateHash = jest.spyOn(fakeHashProvider, 'generateHash')
+
+    await expect(
+      updateProfileService.execute({
+        user_id: user.id,
+        name: 'doisze',
+        email: 'doisze@dois.com',
+        password: '123123',
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to update user with wrong old_passowrd', async () => {
+
+    const user = await fakeUsersRepository.create({
+      name: 'jose',
+      email: 'j@j.com',
+      password: '123456'
+    })
+
+    // const generateHash = jest.spyOn(fakeHashProvider, 'generateHash')
+
+    await expect(
+      updateProfileService.execute({
+        user_id: user.id,
+        name: 'doisze',
+        email: 'doisze@dois.com',
+        password: '123123',
+        old_password: '123446',
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+
+
 });
