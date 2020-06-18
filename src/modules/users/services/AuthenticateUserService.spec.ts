@@ -46,7 +46,6 @@ describe('Authenticate User', () => {
 
   });
 
-
   it('should not be able authenticate a non valid password user', async () => {
 
     const user = await createUserService.execute({

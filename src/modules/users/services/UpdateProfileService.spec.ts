@@ -153,5 +153,18 @@ describe('Update User Profile', () => {
   });
 
 
+  it('should not be able to update non-existing-user user ', async () => {
+
+    await expect(
+      updateProfileService.execute({
+        user_id: 'non-existing-user',
+        name: 'doisze',
+        email: 'doisze@dois.com',
+        password: '123123',
+        old_password: '123446',
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
 
 });
