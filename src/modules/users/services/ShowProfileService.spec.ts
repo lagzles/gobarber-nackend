@@ -42,4 +42,14 @@ describe('Show User Profile', () => {
 
   });
 
+  it('should not be able to show users profile from a non-existing-id', async () => {
+
+    await expect(
+      showProfileService.execute({
+        user_id: 'non-existing-id',
+      })
+    ).rejects.toBeInstanceOf(AppError);
+
+  });
+
 });

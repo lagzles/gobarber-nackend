@@ -6,7 +6,7 @@ import { injectable, inject } from 'tsyringe';
 
 import IUsersRepository from '../repositories/IUsersRepository';
 
-interface Request {
+interface IRequest {
   user_id: string;
 };
 
@@ -18,14 +18,12 @@ class ShowProfileService {
 
   ) { };
 
-  public async execute({ user_id }: Request): Promise<User | undefined> {
+  public async execute({ user_id }: IRequest): Promise<User | undefined> {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('User not found');
     };
-
-    delete user.password;
 
     return user;
   }
