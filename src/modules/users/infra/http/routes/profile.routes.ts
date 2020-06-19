@@ -12,7 +12,7 @@ const profileController = new ProfileController();
 profileRouter.use(ensureAuthentication);
 
 profileRouter.put('/', profileController.update);
-profileRouter.get('/show', profileController.show);
+profileRouter.get('/', profileController.show);
 
 
 export default profileRouter;

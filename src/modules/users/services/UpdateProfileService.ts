@@ -47,7 +47,8 @@ class UpdateProfileService {
 
     if (password && old_password) {
       const checkOldPassword = await this.hashProvider.compareHash(old_password, user.password)
-      if (!checkOldPassword) {
+      if (checkOldPassword) {
+        console.log(checkOldPassword)
         throw new AppError('Should inform the correct Old Password')
       }
     }

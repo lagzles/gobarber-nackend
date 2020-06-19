@@ -1,4 +1,4 @@
-import { sign } from 'jsonwebtoken';
+// import { sign } from 'jsonwebtoken';
 import AppError from '@shared/errors/AppError';
 import { isAfter, addHours } from 'date-fns';
 
@@ -12,11 +12,6 @@ interface IRequest {
   token: string;
   password: string;
 }
-
-// interface IResponse {
-//   user: User;
-//   token: string;
-// }
 
 @injectable()
 class ResetPasswordService {

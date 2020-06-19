@@ -10,7 +10,7 @@ export default class EtherealMailProvider implements IMailProvider {
   private client: Transporter;
 
   constructor(
-    @inject('MailProvider')
+    @inject('MailTemplateProvider')
     private mailTemplateProvider: IMailTemplateProvider,
 
   ) {
@@ -30,10 +30,9 @@ export default class EtherealMailProvider implements IMailProvider {
           user: 'herta.harvey@ethereal.email',
           pass: 'JGURKk7KzunuzkQCE3'
         }
-
-
-
       });
+
+      console.log('transporter');
 
       this.client = transporter;
     });
