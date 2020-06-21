@@ -1,4 +1,3 @@
-import AppError from '@shared/errors/AppError';
 import 'reflect-metadata';
 
 import User from '@modules/users/infra/typeorm/entities/User';
