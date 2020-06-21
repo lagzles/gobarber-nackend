@@ -47,14 +47,15 @@ class UpdateProfileService {
 
     if (password && old_password) {
       const checkOldPassword = await this.hashProvider.compareHash(old_password, user.password)
-      if (checkOldPassword) {
-        console.log(checkOldPassword)
+
+      if (!checkOldPassword) {
         throw new AppError('Should inform the correct Old Password')
       }
     }
 
     if (password) {
-      user.password = password;
+      // user.password = password;
+      user.password = await this.hashProvider.generateHash(password)
     }
 
     await this.usersRepository.save(user);
