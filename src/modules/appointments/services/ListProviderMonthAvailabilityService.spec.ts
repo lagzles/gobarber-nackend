@@ -1,5 +1,5 @@
 
-import AppError from '@shared/errors/AppError';
+// import AppError from '@shared/errors/AppError';
 
 import FakeAppointmentsRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
 import ListProviderMonthAvailabilityService from '@modules/appointments/services/ListProviderMonthAvailabilityService';
@@ -26,11 +26,39 @@ describe('List Provider Month Availability', () => {
     })
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
+      date: new Date(2020, 6, 21, 9, 0, 0),
+    })
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
       date: new Date(2020, 6, 21, 10, 0, 0),
     })
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
+      date: new Date(2020, 6, 21, 11, 0, 0),
+    })
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
       date: new Date(2020, 6, 21, 12, 0, 0),
+    })
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 6, 21, 13, 0, 0),
+    })
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 6, 21, 14, 0, 0),
+    })
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 6, 21, 15, 0, 0),
+    })
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 6, 21, 16, 0, 0),
+    })
+    await fakeAppointmentsRepository.create({
+      provider_id: 'user',
+      date: new Date(2020, 6, 21, 17, 0, 0),
     })
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
@@ -46,8 +74,7 @@ describe('List Provider Month Availability', () => {
     expect(availability).toEqual(expect.arrayContaining([
       { day: 20, available: true },
       { day: 21, available: false },
-      { day: 22, available: false },
-      { day: 23, available: true },
+      { day: 22, available: true },
     ]));
 
   });

@@ -36,9 +36,8 @@ class AppointmentsRepository implements IAppointmentsRepository {
 
     const findAppointment = this.appointments.filter(
       appointment =>
-        appointment.id === provider_id &&
-        getMonth(appointment.date) + 1 === month &&
-        getYear(appointment.date) === year
+        appointment.provider_id === provider_id && getMonth(appointment.date) + 1 === month && getYear(appointment.date) === year
+
     );
 
     return findAppointment;
