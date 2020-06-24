@@ -1,9 +1,8 @@
 // import AppError from '@shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
 import 'reflect-metadata';
-import { getDaysInMonth, getDate, getHours } from 'date-fns';
+import { getHours, isAfter } from 'date-fns';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
-import { Index } from 'typeorm';
 
 interface IRequest {
   provider_id: string;
@@ -33,6 +32,7 @@ class ListProviderDayAvailabilityService {
     })
 
     const hourStart = 8;
+    const currentDate = new Date(Date.now());
 
     const eachHourArray = Array.from(
       { length: 10 },
@@ -40,11 +40,13 @@ class ListProviderDayAvailabilityService {
     );
 
     const availability = eachHourArray.map(hour => {
-      const availableHours = appointments.filter(appointment =>
+      const hasAppointmentInHour = appointments.find(appointment =>
         getHours(appointment.date) === hour
-      )
+      );
 
-      return { hour: hour, available: availableHours.length < 1 }
+      const compareDate = new Date(year, month - 1, day, hour)
+
+      return { hour: hour, available: !hasAppointmentInHour && isAfter(compareDate, currentDate) }
     })
 
 
