@@ -11,7 +11,6 @@ export default class AppointmentsController {
     const { provider_id, date } = request.body;
 
     const parsedDate = parseISO(date);
-    console.log('controller')
 
     const createAppointment = container.resolve(CreateAppointmentService);
 
