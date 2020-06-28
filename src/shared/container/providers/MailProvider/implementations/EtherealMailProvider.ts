@@ -32,7 +32,7 @@ export default class EtherealMailProvider implements IMailProvider {
         }
       });
 
-      console.log('transporter');
+      // console.log('transporter');
 
       this.client = transporter;
     });

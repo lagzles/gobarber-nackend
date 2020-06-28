@@ -9,9 +9,9 @@ const appointmentsController = new AppointmentsController();
 
 appointmentsRouter.use(ensureAuth);
 
-appointmentsRouter.get('/', appointmentsController.create);
+appointmentsRouter.post('/', appointmentsController.create);
 
-appointmentsRouter.post('/', async (request, response) => {
+appointmentsRouter.get('/', async (request, response) => {
 
 });
 
