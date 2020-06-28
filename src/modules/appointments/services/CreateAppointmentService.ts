@@ -47,6 +47,7 @@ class CreateAppointmentService {
       appointmentDate,
     );
 
+
     if (findAppointmentInDate) {
       throw new AppError('Agendamento não é valido. horario ocupado');
     }
@@ -56,8 +57,6 @@ class CreateAppointmentService {
       user_id,
       date: appointmentDate,
     });
-    console.log(user_id);
-
 
     return appointment;
   }

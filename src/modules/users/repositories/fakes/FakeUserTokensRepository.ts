@@ -28,13 +28,12 @@ class FakeUserTokensRepository implements IUserTokensRepository {
   }
 
   public async findByToken(token: string): Promise<UserToken | undefined> {
-    const userToken = new UserToken();
-
     const user = this.userTokens.find(userToken => userToken.token === token)
+    // console.log(this.userTokens)
 
-    if (!user) {
-      throw new AppError('Token is not valid')
-    }
+    // if (!user) {
+    //   throw new AppError('Token is not valid')
+    // }
 
     return user;
 

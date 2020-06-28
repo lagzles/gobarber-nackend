@@ -46,6 +46,7 @@ describe('Authenticate User', () => {
 
   });
 
+
   it('should not be able authenticate a non valid password user', async () => {
 
     const user = await createUserService.execute({
@@ -56,7 +57,7 @@ describe('Authenticate User', () => {
 
     await expect(
       authenticateUserService.execute({
-        email: 'jao@ninguem.com',
+        email: 'joao@ninguem.com',
         password: 'senha-errada',
       })
     ).rejects.toBeInstanceOf(AppError);

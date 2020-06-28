@@ -52,7 +52,8 @@ describe('Reset Password ', () => {
 
   it('should not be able to reset password with non existent token', async () => {
     const { token } = await fakeUserTokensRepository.generate('non-existing-user-id');
-    console.log(token)
+    // console.log(token)
+
     await expect(
       resetPasswordService.execute({
         token: 'token-nao-existente',
