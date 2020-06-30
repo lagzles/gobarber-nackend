@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+
 import ProvidersController from '../controllers/ProvidersController';
 import ProviderDayAvailabilityController from '../controllers/ProviderDayAvailabilityController';
 import ProviderMonthAvailabilityController from '../controllers/ProviderMonthAvailabilityController';
@@ -16,6 +17,5 @@ providersRouter.use(ensureAuth);
 providersRouter.get('/', providersController.index);
 providersRouter.get('/:provider_id/month-availability', monthAvailability.index);
 providersRouter.get('/:provider_id/day-availability', dayAvailability.index);
-
 
 export default providersRouter;
