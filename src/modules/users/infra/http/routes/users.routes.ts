@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
-
+import { celebrate, Segments, Joi } from 'celebrate';
 
 import ensureAuthentication from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import UsersController from '../controllers/UsersController';
@@ -13,7 +13,13 @@ const userAvatarController = new UserAvatarController();
 // middleware de upload de avatar para usuarios
 const upload = multer(uploadConfig);
 
-usersRouter.post('/', usersController.create);
+usersRouter.post('/', celebrate({
+  [Segments.BODY]: {
+    name: Joi.string().required(),
+    password: Joi.string().required(),
+    email: Joi.string().email().required(),
+  }
+}), usersController.create);
 
 // atualizar apenas uma informação do usuario
 usersRouter.patch(
