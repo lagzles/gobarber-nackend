@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity('users')
 class User {
@@ -22,6 +23,7 @@ class User {
   avatar: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @CreateDateColumn()
@@ -29,6 +31,11 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'avatar_url' })
+  getAvatarUrl(): string | null {
+    return this.avatar ? `${process.env.APP_API_URL}/files/${this.avatar}` : null
+  }
 
   // Ao usar uma entidade do TYPEORM, ela ja cria um constructor, por Padrão
   // constructor({ provider, date }: Omit<Appointment, 'id'>) {
