@@ -11,7 +11,7 @@ const usersRouter = Router();
 const usersController = new UsersController();
 const userAvatarController = new UserAvatarController();
 // middleware de upload de avatar para usuarios
-const upload = multer(uploadConfig);
+const upload = multer(uploadConfig.multer);
 
 usersRouter.post('/', celebrate({
   [Segments.BODY]: {

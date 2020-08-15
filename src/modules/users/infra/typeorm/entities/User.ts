@@ -5,6 +5,7 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import uploadConfig from '@config/upload';
 
 import { Exclude, Expose } from 'class-transformer';
 
@@ -34,7 +35,17 @@ class User {
 
   @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {
-    return this.avatar ? `${process.env.APP_API_URL}/files/${this.avatar}` : null
+    if (!this.avatar) {
+      return null;
+    }
+
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return this.avatar ? `${process.env.APP_API_URL}/files/${this.avatar}` : null
+      case 's3':
+
+    }
+
   }
 
   // Ao usar uma entidade do TYPEORM, ela ja cria um constructor, por Padrão
